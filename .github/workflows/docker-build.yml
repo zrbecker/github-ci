@@ -70,6 +70,8 @@ jobs:
 
       - uses: docker/setup-buildx-action@v3
 
+      - run: echo "DEBUG REFS ${{steps.docker-vars.outputs.refs }}"
+
       - id: build
         uses: docker/build-push-action@v6
         with:

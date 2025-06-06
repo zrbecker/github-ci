@@ -24,35 +24,27 @@ inputs:
 outputs:
   ns:
     description: "Namespace for the Docker image"
-    value: ${{ steps.vars.outputs.ns }}
+    value: ${{ steps.set.outputs.ns }}
   repo:
     description: "Repository for the Docker image"
-    value: ${{ steps.vars.outputs.repo }}
+    value: ${{ steps.set.outputs.repo }}
   repo-path:
     description: "Repository path (namespace/repo)"
-    value: ${{ steps.vars.outputs.full-repo }}
+    value: ${{ steps.set.outputs.full-repo }}
   refs:
     description: "Comma-separated Docker image references with tags"
-    value: ${{ steps.vars.outputs.refs }}
+    value: ${{ steps.set.outputs.refs }}
   tags:
     description: "Comma-separated Docker tags"
-    value: ${{ steps.vars.outputs.tags }}
+    value: ${{ steps.set.outputs.tags }}
   tag-args:
     description: "Arguments for docker buildx imagetools create"
-    value: ${{ steps.vars.outputs.tag-args }}
+    value: ${{ steps.set.outputs.tag-args }}
 
 runs:
   using: "composite"
   steps:
-    - id: vars
-      run: |
-        ${{ github.action_path }}/docker_vars.sh >> "$GITHUB_ENV"
-        echo "ns=$DOCKER_NS" >> "$GITHUB_OUTPUT"
-        echo "repo=$DOCKER_REPO" >> "$GITHUB_OUTPUT"
-        echo "repo-path=$DOCKER_REPO_PATH" >> "$GITHUB_OUTPUT"
-        echo "refs=$DOCKER_REFS" >> "$GITHUB_OUTPUT"
-        echo "tags=$DOCKER_TAGS" >> "$GITHUB_OUTPUT"
-        echo "tag-args=$DOCKER_TAG_ARGS" >> "$GITHUB_OUTPUT"
+    - run: ${{ github.action_path }}/docker_vars.sh >> "$GITHUB_ENV"
       shell: bash
       env:
         DOCKER_NS: ${{ inputs.ns }}
@@ -61,6 +53,16 @@ runs:
         DOCKER_TAG_PREFIX: ${{ inputs.tag-prefix }}
         DOCKER_TAG_BRANCH_PREFIX: ${{ inputs.tag-branch-prefix }}
         DOCKER_TAG_BRANCH_SUFFIX: ${{ inputs.tag-branch-suffix }}
+
+    - id: set
+      run: |
+        echo "ns=$DOCKER_NS" >> "$GITHUB_OUTPUT"
+        echo "repo=$DOCKER_REPO" >> "$GITHUB_OUTPUT"
+        echo "repo-path=$DOCKER_REPO_PATH" >> "$GITHUB_OUTPUT"
+        echo "refs=$DOCKER_REFS" >> "$GITHUB_OUTPUT"
+        echo "tags=$DOCKER_TAGS" >> "$GITHUB_OUTPUT"
+        echo "tag-args=$DOCKER_TAG_ARGS" >> "$GITHUB_OUTPUT"
+      shell: bash
 
     - run: |
         echo "=== ENV VARS ==="

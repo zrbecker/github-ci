@@ -15,10 +15,6 @@ on:
         description: "Username for Docker registry authentication"
         required: true
         type: string
-      password:
-        description: "Password or token for Docker registry authentication"
-        required: true
-        type: string
       file:
         description: "Path to Dockerfile to use for building the image"
         required: false
@@ -34,6 +30,10 @@ on:
         required: false
         type: string
         default: ubuntu-24.04-arm
+    secrets:
+      password:
+        description: "Password or token for Docker registry authentication"
+        required: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

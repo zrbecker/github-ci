@@ -1,0 +1,30 @@
+name: docker-vars
+description: generate and export docker tag variables
+inputs:
+  docker-ns:
+    required: true
+  docker-repo:
+    required: true
+  docker-tag-prefix:
+    required: false
+  docker-tag-suffix:
+    required: false
+  docker-tag-branch-prefix:
+    required: false
+  docker-tag-branch-suffix:
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        ${{ github.action_path }}/docker_vars.sh >> "$GITHUB_ENV"
+        ${{ github.action_path }}/docker_vars.sh >> "$GITHUB_OUTPUT"
+      shell: bash
+      env:
+        DOCKER_NS: ${{ inputs.docker-ns }}
+        DOCKER_REPO: ${{ inputs.docker-repo }}
+        DOCKER_TAG_SUFFIX: ${{ inputs.docker-tag-suffix }}
+        DOCKER_TAG_PREFIX: ${{ inputs.docker-tag-prefix }}
+        DOCKER_TAG_BRANCH_PREFIX: ${{ inputs.docker-tag-branch-prefix }}
+        DOCKER_TAG_BRANCH_SUFFIX: ${{ inputs.docker-tag-branch-suffix }}

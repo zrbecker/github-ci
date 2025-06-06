@@ -5,9 +5,8 @@ jobs:
   example:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - id: docker-vars
-        uses: ./actions/docker-vars
+        uses: zrbecker/github-ci/actions/docker-vars@main
         with:
           docker-ns: zrbecker
           docker-repo: hellohttp

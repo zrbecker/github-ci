@@ -5,4 +5,11 @@ jobs:
   example:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello"
+      - uses: actions/checkout@v4
+      - id: docker-vars
+        run: ./scripts/docker_vars.sh >> $GITHUB_OUTPUT
+        env:
+          DOCKER_NS: zrbecker
+          DOCKER_REPO: hellohttp
+          DOCKER_TAG_SUFFIX: "-arm64"
+          DOCKER_TAG_BRANCH_PREFIX: "branch-"

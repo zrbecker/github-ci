@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - id: docker-vars
-        uses: zrbecker/github-ci/.github/actions/docker-vars@main
+        uses: zrbecker/github-ci/.github/actions/docker-vars@v1
         with:
           ns: ${{ inputs.ns }}
           repo: ${{ inputs.repo }}
@@ -89,7 +89,7 @@ jobs:
     needs: [build-images]
     steps:
       - id: docker-vars
-        uses: zrbecker/github-ci/.github/actions/docker-vars@main
+        uses: zrbecker/github-ci/.github/actions/docker-vars@v1
         with:
           ns: ${{ inputs.ns }}
           repo: ${{ inputs.repo }}

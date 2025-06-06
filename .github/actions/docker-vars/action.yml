@@ -30,7 +30,7 @@ outputs:
     value: ${{ steps.set.outputs.repo }}
   repo-path:
     description: "Repository path (namespace/repo)"
-    value: ${{ steps.set.outputs.full-repo }}
+    value: ${{ steps.set.outputs.repo-path }}
   refs:
     description: "Comma-separated Docker image references with tags"
     value: ${{ steps.set.outputs.refs }}
@@ -76,7 +76,7 @@ runs:
         echo "=== OUTPUTS ==="
         echo "ns=${{ steps.set.outputs.ns }}"
         echo "repo=${{ steps.set.outputs.repo }}"
-        echo "repo-path=${{ steps.set.outputs.full-repo }}"
+        echo "repo-path=${{ steps.set.outputs.repo-path }}"
         echo "refs=${{ steps.set.outputs.refs }}"
         echo "tags=${{ steps.set.outputs.tags }}"
         echo "tag-args=${{ steps.set.outputs.tag-args }}"

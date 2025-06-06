@@ -2,36 +2,62 @@ name: Docker Variables
 description: Generate and export Docker tag variables
 
 inputs:
-  docker-ns:
+  ns:
     description: "Docker organization or namespace"
     required: true
-  docker-repo:
+  repo:
     description: "Repository name for the Docker image"
     required: true
-  docker-tag-prefix:
+  tag-prefix:
     description: "Optional prefix for the Docker tag"
     required: false
-  docker-tag-suffix:
+  tag-suffix:
     description: "Optional suffix for the Docker tag"
     required: false
-  docker-tag-branch-prefix:
+  tag-branch-prefix:
     description: "Optional prefix to apply when generating a Docker tag from a branch name"
     required: false
-  docker-tag-branch-suffix:
+  tag-branch-suffix:
     description: "Optional suffix to apply when generating a Docker tag from a branch name"
     required: false
+
+outputs:
+  ns:
+    description: "Namespace for the Docker image"
+    value: ${{ steps.vars.outputs.ns }}
+  repo:
+    description: "Repository for the Docker image"
+    value: ${{ steps.vars.outputs.repo }}
+  repo-path:
+    description: "Repository path (namespace/repo)"
+    value: ${{ steps.vars.outputs.full-repo }}
+  refs:
+    description: "Comma-separated Docker image references with tags"
+    value: ${{ steps.vars.outputs.refs }}
+  tags:
+    description: "Comma-separated Docker tags"
+    value: ${{ steps.vars.outputs.tags }}
+  tag-args:
+    description: "Arguments for docker buildx imagetools create"
+    value: ${{ steps.vars.outputs.tag-args }}
 
 runs:
   using: "composite"
   steps:
-    - run: |
+    - id: vars
+      run: |
         ${{ github.action_path }}/docker_vars.sh >> "$GITHUB_ENV"
-        ${{ github.action_path }}/docker_vars.sh >> "$GITHUB_OUTPUT"
+        echo "ns=$DOCKER_NS" >> "$GITHUB_OUTPUT"
+        echo "repo=$DOCKER_REPO" >> "$GITHUB_OUTPUT"
+        echo "repo-path=$DOCKER_REPO_PATH" >> "$GITHUB_OUTPUT"
+        echo "refs=$DOCKER_REFS" >> "$GITHUB_OUTPUT"
+        echo "tags=$DOCKER_TAGS" >> "$GITHUB_OUTPUT"
+        echo "tag-args=$DOCKER_TAG_ARGS" >> "$GITHUB_OUTPUT"
       shell: bash
       env:
-        DOCKER_NS: ${{ inputs.docker-ns }}
-        DOCKER_REPO: ${{ inputs.docker-repo }}
-        DOCKER_TAG_SUFFIX: ${{ inputs.docker-tag-suffix }}
-        DOCKER_TAG_PREFIX: ${{ inputs.docker-tag-prefix }}
-        DOCKER_TAG_BRANCH_PREFIX: ${{ inputs.docker-tag-branch-prefix }}
-        DOCKER_TAG_BRANCH_SUFFIX: ${{ inputs.docker-tag-branch-suffix }}
+        DOCKER_NS: ${{ inputs.ns }}
+        DOCKER_REPO: ${{ inputs.repo }}
+        DOCKER_TAG_SUFFIX: ${{ inputs.tag-suffix }}
+        DOCKER_TAG_PREFIX: ${{ inputs.tag-prefix }}
+        DOCKER_TAG_BRANCH_PREFIX: ${{ inputs.tag-branch-prefix }}
+        DOCKER_TAG_BRANCH_SUFFIX: ${{ inputs.tag-branch-suffix }}

@@ -25,6 +25,7 @@ done
 
 echo "DOCKER_NS=${DOCKER_NS}"
 echo "DOCKER_REPO=\"${DOCKER_REPO}\""
+echo "DOCKER_REPO_PATH=${DOCKER_NS}/${DOCKER_REPO}"
 
 TAGS=""
 global_prefix="${DOCKER_TAG_PREFIX:-}"

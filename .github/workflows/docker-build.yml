@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - id: docker-vars
-        uses: zrbecker/github-ci/actions/docker-vars@main
+        uses: zrbecker/github-ci/.github/actions/docker-vars@main
         with:
           ns: ${{ inputs.ns }}
           repo: ${{ inputs.repo }}

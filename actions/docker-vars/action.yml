@@ -1,17 +1,24 @@
-name: docker-vars
-description: generate and export docker tag variables
+name: Docker Variables
+description: Generate and export Docker tag variables
+
 inputs:
   docker-ns:
+    description: "Docker organization or namespace"
     required: true
   docker-repo:
+    description: "Repository name for the Docker image"
     required: true
   docker-tag-prefix:
+    description: "Optional prefix for the Docker tag"
     required: false
   docker-tag-suffix:
+    description: "Optional suffix for the Docker tag"
     required: false
   docker-tag-branch-prefix:
+    description: "Optional prefix to apply when generating a Docker tag from a branch name"
     required: false
   docker-tag-branch-suffix:
+    description: "Optional suffix to apply when generating a Docker tag from a branch name"
     required: false
 
 runs:

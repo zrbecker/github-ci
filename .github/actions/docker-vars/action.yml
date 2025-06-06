@@ -61,3 +61,21 @@ runs:
         DOCKER_TAG_PREFIX: ${{ inputs.tag-prefix }}
         DOCKER_TAG_BRANCH_PREFIX: ${{ inputs.tag-branch-prefix }}
         DOCKER_TAG_BRANCH_SUFFIX: ${{ inputs.tag-branch-suffix }}
+
+    - run: |
+        echo "=== ENV VARS ==="
+        echo "DOCKER_NS=$DOCKER_NS"
+        echo "DOCKER_REPO=$DOCKER_REPO"
+        echo "DOCKER_REPO_PATH=$DOCKER_REPO_PATH"
+        echo "DOCKER_REFS=$DOCKER_REFS"
+        echo "DOCKER_TAGS=$DOCKER_TAGS"
+        echo "DOCKER_TAG_ARGS=$DOCKER_TAG_ARGS"
+        echo ""
+        echo "=== OUTPUTS ==="
+        echo "ns=${{ steps.vars.outputs.ns }}"
+        echo "repo=${{ steps.vars.outputs.repo }}"
+        echo "repo-path=${{ steps.vars.outputs.full-repo }}"
+        echo "refs=${{ steps.vars.outputs.refs }}"
+        echo "tags=${{ steps.vars.outputs.tags }}"
+        echo "tag-args=${{ steps.vars.outputs.tag-args }}"
+      shell: bash
